@@ -6,7 +6,7 @@ const {
   validatePassword,
   validateBirthday,
   validatePhone
-} = require("../middlewares/userValidator")
+} = require("@n00bst3r/pwa-week-2-validator")
 
 // Testing Route
 router.get("/", (req, res) => {

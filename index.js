@@ -1,4 +1,4 @@
-// Load Express
+// Loading Express
 const express = require("express");
 
 //Start an instance of express and call it app
@@ -18,8 +18,8 @@ const PORT = process.env.PORT || 3000;
 const routes = require("./routes");
 
 // Apply body-parser middleware
-app.use(bodyParser.json()); // For parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 // Set up the uri
 app.use("/", routes);
