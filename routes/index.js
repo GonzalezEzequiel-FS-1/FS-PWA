@@ -5,23 +5,25 @@ const {
   validateEmail,
   validatePassword,
   validateBirthday,
-  validatePhone
-} = require("@n00bst3r/pwa-week-2-validator")
+  validatePhone,
+} = require("@n00bst3r/pwa-week-2-validator");
 
 // Testing Route
 router.get("/", (req, res) => {
-  res.status(200).send({
+  res.status(200).json({
     success: true,
     message: `Welcome to my api`,
   });
 });
 
 // SignUp Route
-router.post("/signup", 
+router.post(
+  "/signup",
   validateEmail,
   validatePassword,
   validateBirthday,
   validatePhone,
-  signup);
+  signup,
+);
 
 module.exports = router;
