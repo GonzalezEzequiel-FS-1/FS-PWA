@@ -10,6 +10,7 @@
   "author": "Zeke",
   "license": "ISC",
   "dependencies": {
+    "@jworkman-fs/test": "^1.0.0",
     "@n00bst3r/pwa-week-2-validator": "^1.2.4",
     "axios": "^1.7.7",
     "body-parser": "^1.20.2",

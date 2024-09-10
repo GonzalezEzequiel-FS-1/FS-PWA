@@ -1,10 +1,10 @@
 const axios = require("axios");
 const email = "test@email.com";
-const phone = "123-456-7890";
-const birthday = "1/23/4567";
-const password = "qwertyuiop1!";
+const phone = "323-456-7890";
+const birthday = "01/23/1990";
+const password = "aasdf123";
 
-test("Server responds on port 3000", () => {
+test("Test #1 API is running", () => {
   const response = axios.get("http://localhost:3000");
   return response
     .then(({ status }) => {
@@ -15,14 +15,14 @@ test("Server responds on port 3000", () => {
     });
 });
 
-test("Route /signup works correctly", () => {
+test("Test #2 Signup endpoint is setup", () => {
   const response = axios.post("http://localhost:3000/signup");
   return response.catch(({ response }) => {
     expect(response.code).not.toBe(404);
   });
 });
 
-test("User Email Validates correctly", () => {
+test("User data validates correctly", () => {
   const response = axios.post("http://localhost:3000/signup", {
     email,
     phone,
@@ -30,7 +30,70 @@ test("User Email Validates correctly", () => {
     password,
   });
   return response.catch(({ response }) => {
-    expect(response.data.success).toBe(false);
-    console.log(response.data.success);
+    expect(response.data.message).toBe("User has sucessfully signed up!");
+    expect(response.code).toBeGreaterThanOrEqual(200);
+    expect(response.code).toBeLessThanOrEqual(299);
+  });
+});
+
+test("Password contains the correct ammount of characters", () => {
+  const response = axios.post("http://localhost:3000/signup", {
+    email,
+    phone,
+    birthday,
+    password,
+  });
+  return response.catch(({ response }) => {
+    expect(response.data.user.password.lenght).toBeGreaterThanOrEqual("8");
+    console.log(response.data.message);
+  });
+});
+
+test("Test #4 Email Validation Works", () => {
+  const response = axios.post("http://localhost:3000/signup", {
+    email: "qqq.com",
+    phone,
+    birthday,
+    password,
+  });
+  return response.catch(({ response }) => {
+    expect(response.status).toBe(422);
+  });
+});
+test("Test #5 Phone Validation Works", () => {
+  const response = axios.post("http://localhost:3000/signup", {
+    email,
+    phone: "111-111-1111",
+    //10 digit phone number may not start with 1
+    birthday,
+    password,
+  });
+  return response.catch(({ response }) => {
+    expect(response.status).toBe(422);
+  });
+});
+
+test("Test #5 birthday Validation Works", () => {
+  const response = axios.post("http://localhost:3000/signup", {
+    email,
+    phone,
+    birthday: "22/22/22",
+    //22 months?
+    password,
+  });
+  return response.catch(({ response }) => {
+    expect(response.status).toBe(422);
+  });
+});
+test("Test #6 Password Validation Works", () => {
+  const response = axios.post("http://localhost:3000/signup", {
+    email,
+    phone,
+    birthday,
+    password: "asd12345678",
+    // Correct ammount of characters, but none are special
+  });
+  return response.catch(({ response }) => {
+    expect(response.status).toBe(422);
   });
 });
