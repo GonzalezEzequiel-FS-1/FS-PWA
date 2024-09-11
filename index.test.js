@@ -1,4 +1,5 @@
 const axios = require("axios");
+const classTests = require("@jworkman-fs/test/user.test");
 const email = "test@email.com";
 const phone = "323-456-7890";
 const birthday = "01/23/1990";

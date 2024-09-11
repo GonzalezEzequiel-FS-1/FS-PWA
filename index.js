@@ -11,6 +11,10 @@ dotenv.config();
 // Load BodyParser
 const bodyParser = require("body-parser");
 
+//Set up CORS
+const cors = require("cors");
+app.use(cors());
+
 // Assign the port and its default
 const PORT = process.env.PORT || 3000;
 
@@ -18,8 +22,8 @@ const PORT = process.env.PORT || 3000;
 const routes = require("./routes");
 
 // Apply body-parser middleware
-app.use(bodyParser.json()); 
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set up the uri
 app.use("/", routes);
