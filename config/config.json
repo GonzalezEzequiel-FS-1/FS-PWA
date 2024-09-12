@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "shadywarlock",
+    "password": "P@ssword123",
+    "database": "userpwa",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "shadywarlock",
+    "password": "P@ssword123",
+    "database": "userpwa",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "shadywarlock",
+    "password": "P@ssword123",
+    "database": "userpwa",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
