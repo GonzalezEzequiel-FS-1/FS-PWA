@@ -5,12 +5,12 @@ const phoneValidator = /^(\+1\s?)?\(?([2-9][0-9]{2})\)?[\s.-]?([2-9][0-9]{2})[\s
 
 const validateInput = (field, value, regex, res, next) => {
   if (!value) {
-    return res.status(400).json({
+    return res.status(422).json({
       success: false,
       message: `Please provide a valid ${field}`
     });
   } else if (!regex.test(value)) {
-    return res.status(400).json({
+    return res.status(422).json({
       success: false,
       message: `Invalid ${field} provided: ${value}`
     });

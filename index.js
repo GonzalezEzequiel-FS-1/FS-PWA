@@ -8,9 +8,6 @@ const app = express();
 const dotenv = require("dotenv");
 dotenv.config();
 
-// Load BodyParser
-const bodyParser = require("body-parser");
-
 //Set up CORS
 const cors = require("cors");
 app.use(cors());
@@ -21,14 +18,14 @@ const PORT = process.env.PORT || 3000;
 // Define routes
 const routes = require("./routes");
 
-// Apply body-parser middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// Apply Express built-in body-parser middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Set up the uri
 app.use("/", routes);
 
 // Start the Server
 app.listen(PORT, () => {
-  console.log(`Server Running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
