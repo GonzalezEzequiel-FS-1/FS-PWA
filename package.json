@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@jworkman-fs/test": "^1.0.0",
-    "@n00bst3r/pwa-week-2-validator": "^1.2.4",
+    "@n00bst3r/pwa-week-2-validator": "^1.2.5",
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
