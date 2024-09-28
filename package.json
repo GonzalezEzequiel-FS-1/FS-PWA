@@ -21,7 +21,10 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.11.2",
     "pwa-week-2-validator": "^1.2.0",
-    "sequelize": "^6.37.3"
+    "sequelize": "^6.37.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",

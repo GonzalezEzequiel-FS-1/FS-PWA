@@ -1,0 +1,388 @@
+openapi: 3.0.0
+info:
+  title: Proggraming for Web Applications User Management API
+  description: API for managing users, including signup, retrieval, updating, and deletion functionalities. Made for Proggraming for web applications course at Full Sail University for prof. J. Workman
+  version: 1.0.0
+  contact:
+    name: Ezequiel Gonzalez
+    email: e.gonzalezhidalgo@fullsail.student.edu
+    url: http://www.n00bst3r.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:3000/api
+    description: Development server
+
+paths:
+  /:
+    get:
+      summary: Welcome message
+      description: Returns a welcome message for the API.
+      responses:
+        '200':
+          description: A welcome message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Welcome to my API
+
+  /signup:
+    post:
+      summary: User signup
+      description: Allows a user to sign up with email, phone, birthday, and password. The password is stored securely.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - phone
+                - birthday
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: test@email.com
+                  description: User's email address.
+                phone:
+                  type: string
+                  example: 223-456-7890
+                  description: User's phone number.
+                birthday:
+                  type: string
+                  format: date
+                  example: 1980-01-23
+                  description: User's date of birth.
+                password:
+                  type: string
+                  example: asdf1234
+                  description: User's password. Should be at least 8 characters long.
+      responses:
+        '201':
+          description: User successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User created successfully
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: Unique ID of the created user.
+                      email:
+                        type: string
+                        description: User's email.
+                      phone:
+                        type: string
+                        description: User's phone number.
+                      birthday:
+                        type: string
+                        format: date
+                        description: User's date of birth.
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: Timestamp when the user was created.
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: Timestamp when the user was last updated.
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: object
+                    properties:
+                      email:
+                        type: array
+                        items:
+                          type: string
+                          example: "Email is required"
+                      password:
+                        type: array
+                        items:
+                          type: string
+                          example: "Password must be at least 8 characters"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: An error occurred while creating the user.
+
+  /users:
+    get:
+      summary: Get all users
+      description: Retrieves a list of all registered users.
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Unique ID of the user.
+                    email:
+                      type: string
+                      description: User's email.
+                    phone:
+                      type: string
+                      description: User's phone number.
+                    birthday:
+                      type: string
+                      format: date
+                      description: User's date of birth.
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: Timestamp when the user was created.
+                    updatedAt:
+                      type: string
+                      format: date-time
+                      description: Timestamp when the user was last updated.
+
+  /users/{id}:
+    get:
+      summary: Get a user by ID
+      description: Retrieves a user by their unique ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the user to retrieve
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A user object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                  phone:
+                    type: string
+                  birthday:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: User not found
+
+    put:
+      summary: Edit a user
+      description: Updates the user information.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the user to edit
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: test@email.com
+                phone:
+                  type: string
+                  example: 223-456-7890
+                birthday:
+                  type: string
+                  format: date
+                  example: 1980-01-23
+                password:
+                  type: string
+                  example: newpassword1234
+      responses:
+        '200':
+          description: User successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User updated successfully
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      email:
+                        type: string
+                      phone:
+                        type: string
+                      birthday:
+                        type: string
+        '400':
+          description: Bad request due to validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Validation failed for one or more fields.
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: User not found
+
+    delete:
+      summary: Delete a user
+      description: Deletes a user by their unique ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the user to delete
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: User successfully deleted
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: User not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: An error occurred while deleting the user.
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        phone:
+          type: string
+        birthday:
+          type: string
+          format: date
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+  responses:
+    ValidationError:
+      description: Validation error response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              errors:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+
